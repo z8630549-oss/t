@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduSpace — Student Portal</title>
+
+<style>
+:root{
+    --bg:#f5f7fb;
+    --panel:#fff;
+    --text:#172033;
+    --muted:#8993a7;
+    --line:#e8ecf3;
+    --blue:#3567f0;
+    --blue2:#edf2ff;
+    --green:#16b364;
+    --orange:#ff9d42;
+    --red:#f04461;
+    --shadow:0 8px 30px rgba(27,39,70,.06);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+button,input{font:inherit}
+
+button{cursor:pointer}
+
+.app{
+    min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:250px;
+    background:var(--panel);
+    border-right:1px solid var(--line);
+    padding:24px 15px;
+    z-index:20;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:800;
+    padding:7px 14px 35px;
+    color:var(--blue);
+}
+
+.logo span{
+    color:var(--text);
+}
+
+.label{
+    font-size:10px;
+    font-weight:800;
+    color:#a0a8b8;
+    letter-spacing:1px;
+    margin:22px 13px 8px;
+}
+
+.nav{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    width:100%;
+    border:0;
+    background:none;
+    color:var(--muted);
+    padding:12px 14px;
+    border-radius:10px;
+    margin-bottom:3px;
+    text-align:left;
+}
+
+.nav:hover,
+.nav.active{
+    background:var(--blue2);
+    color:var(--blue);
+}
+
+.nav-icon{
+    width:22px;
+    text-align:center;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:250px;
+    min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+    height:74px;
+    background:var(--panel);
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 32px;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.search{
+    width:310px;
+    height:40px;
+    border:1px solid var(--line);
+    background:var(--bg);
+    border-radius:10px;
+    outline:none;
+    padding:0 14px;
+}
+
+.right{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.icon-button{
+    width:40px;
+    height:40px;
+    border:0;
+    border-radius:50%;
+    background:var(--bg);
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#386cff,#7356ef);
+    color:white;
+    display:grid;
+    place-items:center;
+    font-weight:bold;
+}
+
+/* CONTENT */
+
+.content{
+    max-width:1450px;
+    margin:auto;
+    padding:30px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.welcome{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.welcome h1{
+    font-size:28px;
+}
+
+.welcome p{
+    color:var(--muted);
+    margin-top:7px;
+}
+
+.primary{
+    border:0;
+    background:var(--blue);
+    color:white;
+    border-radius:9px;
+    padding:12px 18px;
+    font-weight:600;
+}
+
+.primary:hover{
+    filter:brightness(1.08);
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:17px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:15px;
+    padding:19px;
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    width:42px;
+    height:42px;
+    display:grid;
+    place-items:center;
+    border-radius:11px;
+    background:var(--blue2);
+    font-size:20px;
+}
+
+.stat-number{
+    font-size:25px;
+    font-weight:800;
+    margin-top:14px;
+}
+
+.stat-name{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:4px;
+}
+
+/* GRID */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:1.7fr 1fr;
+    gap:20px;
+}
+
+.card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:15px;
+    padding:21px;
+    margin-bottom:20px;
+    box-shadow:var(--shadow);
+}
+
+.card-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:17px;
+}
+
+.card-head h2{
+    font-size:18px;
+}
+
+.link{
+    color:var(--blue);
+    font-size:13px;
+    cursor:pointer;
+}
+
+/* COURSES */
+
+.course{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:15px 0;
+    border-bottom:1px solid var(--line);
+}
+
+.course:last-child{
+    border-bottom:0;
+}
+
+.course-icon{
+    width:53px;
+    height:53px;
+    border-radius:13px;
+    display:grid;
+    place-items:center;
+    font-size:23px;
+    background:var(--blue2);
+}
+
+.course-info{
+    flex:1;
+}
+
+.course-info h3{
+    font-size:14px;
+    margin-bottom:5px;
+}
+
+.course-info p{
+    font-size:11px;
+    color:var(--muted);
+}
+
+.progress{
+    height:7px;
+    background:var(--bg);
+    border-radius:20px;
+    margin-top:9px;
+    overflow:hidden;
+}
+
+.progress div{
+    height:100%;
+    border-radius:20px;
+    background:linear-gradient(90deg,#3567f0,#7356ef);
+}
+
+.percent{
+    font-size:13px;
+    font-weight:bold;
+    color:var(--blue);
+}
+
+/* LESSONS */
+
+.lesson{
+    display:flex;
+    gap:14px;
+    padding:15px 0;
+    border-bottom:1px solid var(--line);
+}
+
+.lesson:last-child{
+    border-bottom:0;
+}
+
+.time{
+    width:52px;
+    color:var(--blue);
+    font-weight:bold;
+}
+
+.lesson small{
+    display:block;
+    color:var(--muted);
+    margin-top:4px;
+}
+
+/* CHART */
+
+.chart{
+    height:190px;
+    display:flex;
+    align-items:end;
+    gap:13px;
+}
+
+.column{
+    flex:1;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:end;
+    align-items:center;
+}
+
+.bar{
+    width:30px;
+    max-width:100%;
+    background:linear-gradient(#7595ff,#3567f0);
+    border-radius:6px 6px 2px 2px;
+}
+
+.day{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:8px;
+}
+
+/* BADGES */
+
+.badges{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:9px;
+}
+
+.badge{
+    height:62px;
+    border-radius:12px;
+    background:var(--bg);
+    display:grid;
+    place-items:center;
+    font-size:27px;
+    transition:.2s;
+}
+
+.badge:hover{
+    transform:translateY(-4px);
+}
+
+/* TASKS */
+
+.task{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:18px 0;
+    border-bottom:1px solid var(--line);
+}
+
+.task:last-child{
+    border:0;
+}
+
+.task p{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:5px;
+}
+
+/* PROFILE */
+
+.profile{
+    max-width:650px;
+}
+
+.profile-top{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.big-avatar{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    color:white;
+    font-size:30px;
+    font-weight:bold;
+    background:linear-gradient(135deg,#3567f0,#7356ef);
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#172033;
+    color:#fff;
+    padding:15px 20px;
+    border-radius:10px;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.3s;
+    z-index:100;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* MOBILE */
+
+.mobile{
+    display:none;
+    border:0;
+    background:none;
+    font-size:24px;
+}
+
+@media(max-width:1000px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .mobile{
+        display:block;
+    }
+
+    .header{
+        padding:0 18px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    .content{
+        padding:18px;
+    }
+
+    .search{
+        display:none;
+    }
+
+    .welcome{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .welcome h1{
+        font-size:23px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat{
+        padding:14px;
+    }
+
+    .course-icon{
+        width:43px;
+        height:43px;
+    }
+
+    .badges{
+        grid-template-columns:repeat(4,1fr);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="logo">
+        Edu<span>Space</span>
+    </div>
+
+    <div class="label">Обучение</div>
+
+    <button class="nav active" onclick="page('home',this)">
+        <span class="nav-icon">⌂</span>
+        Главная
+    </button>
+
+    <button class="nav" onclick="page('courses',this)">
+        <span class="nav-icon">▣</span>
+        Мои курсы
+    </button>
+
+    <button class="nav" onclick="page('tasks',this)">
+        <span class="nav-icon">✓</span>
+        Задания
+    </button>
+
+    <button class="nav" onclick="page('schedule',this)">
+        <span class="nav-icon">▦</span>
+        Расписание
+    </button>
+
+    <div class="label">Мой аккаунт</div>
+
+    <button class="nav" onclick="page('achievements',this)">
+        <span class="nav-icon">♛</span>
+        Достижения
+    </button>
+
+    <button class="nav" onclick="page('profile',this)">
+        <span class="nav-icon">●</span>
+        Профиль
+    </button>
+
+    <div class="label">Дополнительно</div>
+
+    <button class="nav" onclick="theme()">
+        <span class="nav-icon">☾</span>
+        Тёмная тема
+    </button>
+
+    <button class="nav" onclick="toast('🔔 Новых уведомлений: 3')">
+        <span class="nav-icon">♢</span>
+        Уведомления
+    </button>
+
+</aside>
+
+<main class="main">
+
+<header class="header">
+
+    <button class="mobile" onclick="mobileMenu()">☰</button>
+
+    <input
+        class="search"
+        id="search"
+        placeholder="Поиск..."
+        oninput="search()"
+    >
+
+    <div class="right">
+
+        <button class="icon-button" onclick="toast('🔔 У тебя 3 новых уведомления')">
+            ♢
+        </button>
+
+        <div class="avatar">А</div>
+
+    </div>
+
+</header>
+
+<div class="content">
+
+<!-- HOME -->
+
+<section class="page active" id="home">
+
+    <div class="welcome">
+
+        <div>
+            <h1>Добро пожаловать, Алекс! 👋</h1>
+            <p>Продолжай обучение и развивай свои навыки.</p>
+        </div>
+
+        <button class="primary" onclick="toast('🚀 Следующий урок открыт!')">
+            Продолжить обучение →
+        </button>
+
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="stat-icon">📚</div>
+            <div class="stat-number">6</div>
+            <div class="stat-name">Активных курсов</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">🔥</div>
+            <div class="stat-number">18</div>
+            <div class="stat-name">Дней подряд</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-number">2 480</div>
+            <div class="stat-name">XP заработано</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-number">12</div>
+            <div class="stat-name">Достижений</div>
+        </div>
+
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div>
+
+            <div class="card">
+
+                <div class="card-head">
+                    <h2>Мои курсы</h2>
+                    <span class="link" onclick="page('courses')">
+                        Все курсы →
+                    </span>
+                </div>
+
+                <div id="coursesList">
+
+                    <div class="course">
+                        <div class="course-icon">💻</div>
+
+                        <div class="course-info">
+                            <h3>Web Development</h3>
+                            <p>24 из 32 уроков</p>
+                            <div class="progress">
+                                <div style="width:75%"></div>
+                            </div>
+                        </div>
+
+                        <div class="percent">75%</div>
+                    </div>
+
+                    <div class="course">
+                        <div class="course-icon">🐍</div>
+
+                        <div class="course-info">
+                            <h3>Python</h3>
+                            <p>18 из 30 уроков</p>
+                            <div class="progress">
+                                <div style="width:60%"></div>
+                            </div>
+                        </div>
+
+                        <div class="percent">60%</div>
+                    </div>
+
+                    <div class="course">
+                        <div class="course-icon">🎨</div>
+
+                        <div class="course-info">
+                            <h3>UI / UX Design</h3>
+                            <p>12 из 25 уроков</p>
+                            <div class="progress">
+                                <div style="width:48%"></div>
+                            </div>
+                        </div>
+
+                        <div class="percent">48%</div>
+                    </div>
+
+                    <div class="course">
+                        <div class="course-icon">🤖</div>
+
+                        <div class="course-info">
+                            <h3>Artificial Intelligence</h3>
+                            <p>8 из 20 уроков</p>
+                            <div class="progress">
+                                <div style="width:40%"></div>
+                            </div>
+                        </div>
+
+                        <div class="percent">40%</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-head">
+                    <h2>Активность</h2>
+                    <span class="link">Эта неделя</span>
+                </div>
+
+                <div class="chart">
+
+                    <div class="column">
+                        <div class="bar" style="height:45%"></div>
+                        <span class="day">Пн</span>
+                    </div>
+
+                    <div class="column">
+                        <div class="bar" style="height:70%"></div>
+                        <span class="day">Вт</span>
+                    </div>
+
+                    <div class="column">
+                        <div class="bar" style="height:35%"></div>
+                        <span class="day">Ср</span>
+                    </div>
+
+                    <div class="column">
+                        <div class="bar" style="height:90%"></div>
+                        <span class="day">Чт</span>
+                    </div>
+
+                    <div class="column">
+                        <div class="bar" style="height:65%"></div>
+                        <span class="day">Пт</span>
+                    </div>
+
+                    <div class="column">
+                        <div class="bar" style="height:80%"></div>
+                        <span class="day">Сб</span>
+                    </div>
+
+                    <div class="column">
+                        <div class="bar" style="height:50%"></div>
+                        <span class="day">Вс</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div>
+
+            <div class="card">
+
+                <div class="card-head">
+                    <h2>Сегодня</h2>
+                    <span class="link" onclick="page('schedule')">
+                        Всё расписание
+                    </span>
+                </div>
+
+                <div class="lesson">
+                    <div class="time">10:00</div>
+                    <div>
+                        <b>Python</b>
+                        <small>Практика</small>
+                    </div>
+                </div>
+
+                <div class="lesson">
+                    <div class="time">13:30</div>
+                    <div>
+                        <b>Web Development</b>
+                        <small>JavaScript</small>
+                    </div>
+                </div>
+
+                <div class="lesson">
+                    <div class="time">17:00</div>
+                    <div>
+                        <b>UI / UX</b>
+                        <small>Figma</small>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-head">
+                    <h2>Достижения</h2>
+                    <span class="link" onclick="page('achievements')">
+                        Все
+                    </span>
+                </div>
+
+                <div class="badges">
+                    <div class="badge">🔥</div>
+                    <div class="badge">🚀</div>
+                    <div class="badge">💻</div>
+                    <div class="badge">🧠</div>
+                    <div class="badge">⭐</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- COURSES -->
+
+<section class="page" id="courses">
+
+    <div class="welcome">
+        <div>
+            <h1>Мои курсы 📚</h1>
+            <p>Продолжай обучение.</p>
+        </div>
+    </div>
+
+    <div class="card">
+
+        <div class="course">
+            <div class="course-icon">💻</div>
+            <div class="course-info">
+                <h3>Web Development</h3>
+                <p>HTML · CSS · JavaScript</p>
+                <div class="progress">
+                    <div style="width:75%"></div>
+                </div>
+            </div>
+            <b>75%</b>
+        </div>
+
+        <div class="course">
+            <div class="course-icon">🐍</div>
+            <div class="course-info">
+                <h3>Python</h3>
+                <p>Основы программирования</p>
+                <div class="progress">
+                    <div style="width:60%"></div>
+                </div>
+            </div>
+            <b>60%</b>
+        </div>
+
+        <div class="course">
+            <div class="course-icon">🎨</div>
+            <div class="course-info">
+                <h3>UI / UX Design</h3>
+                <p>Figma · Interface Design</p>
+                <div class="progress">
+                    <div style="width:48%"></div>
+                </div>
+            </div>
+            <b>48%</b>
+        </div>
+
+        <div class="course">
+            <div class="course-icon">🤖</div>
+            <div class="course-info">
+                <h3>Artificial Intelligence</h3>
+                <p>AI · Machine Learning</p>
+                <div class="progress">
+                    <div style="width:40%"></div>
+                </div>
+            </div>
+            <b>40%</b>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- TASKS -->
+
+<section class="page" id="tasks">
+
+    <div class="welcome">
+        <div>
+            <h1>Задания 📝</h1>
+            <p>Выполняй задания и получай XP.</p>
+        </div>
+    </div>
+
+    <div class="card">
+
+        <div class="task">
+            <div>
+                <b>Создать HTML-страницу</b>
+                <p>Web Development · +100 XP</p>
+            </div>
+            <button class="primary" onclick="complete(this)">
+                Выполнить
+            </button>
+        </div>
+
+        <div class="task">
+            <div>
+                <b>Написать Python-функцию</b>
+                <p>Python · +150 XP</p>
+            </div>
+            <button class="primary" onclick="complete(this)">
+                Выполнить
+            </button>
+        </div>
+
+        <div class="task">
+            <div>
+                <b>Создать дизайн приложения</b>
+                <p>UI / UX · +200 XP</p>
+            </div>
+            <button class="primary" onclick="complete(this)">
+                Выполнить
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- SCHEDULE -->
+
+<section class="page" id="schedule">
+
+    <div class="welcome">
+        <div>
+            <h1>Расписание 📅</h1>
+            <p>Твои ближайшие занятия.</p>
+        </div>
+    </div>
+
+    <div class="card">
+
+        <div class="lesson">
+            <div class="time">10:00</div>
+            <div>
+                <b>Python</b>
+                <small>Практическое занятие</small>
+            </div>
+        </div>
+
+        <div class="lesson">
+            <div class="time">13:30</div>
+            <div>
+                <b>Web Development</b>
+                <small>JavaScript</small>
+            </div>
+        </div>
+
+        <div class="lesson">
+            <div class="time">17:00</div>
+            <div>
+                <b>UI / UX Design</b>
+                <small>Figma</small>
+            </div>
+        </div>
+
+        <div class="lesson">
+            <div class="time">19:00</div>
+            <div>
+                <b>English</b>
+                <small>Speaking Club</small>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ACHIEVEMENTS -->
+
+<section class="page" id="achievements">
+
+    <div class="welcome">
+        <div>
+            <h1>Достижения 🏆</h1>
+            <p>Собирай награды за обучение.</p>
+        </div>
+    </div>
+
+    <div class="card">
+
+        <div class="badges">
+            <div class="badge">🔥</div>
+            <div class="badge">🚀</div>
+            <div class="badge">💻</div>
+            <div class="badge">🧠</div>
+            <div class="badge">⭐</div>
+            <div class="badge">🎯</div>
+            <div class="badge">👑</div>
+            <div class="badge">💎</div>
+            <div class="badge">⚡</div>
+            <div class="badge">🏆</div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- PROFILE -->
+
+<section class="page" id="profile">
+
+    <div class="welcome">
+        <div>
+            <h1>Профиль 👤</h1>
+            <p>Информация об аккаунте.</p>
+        </div>
+    </div>
+
+    <div class="card">
+
+        <div class="profile-top">
+
+            <div class="big-avatar">А</div>
+
+            <div>
+                <h2>Алекс</h2>
+                <p style="color:var(--muted);margin-top:6px">
+                    Ученик · Level 12
+                </p>
+            </div>
+
+        </div>
+
+        <hr style="border:0;border-top:1px solid var(--line);margin:25px 0">
+
+        <p>⭐ 2 480 XP</p>
+        <p style="margin-top:12px">🔥 18 дней подряд</p>
+        <p style="margin-top:12px">📚 6 активных курсов</p>
+        <p style="margin-top:12px">🏆 12 достижений</p>
+
+    </div>
+
+</section>
+
+</div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+function page(name,button){
+
+    document.querySelectorAll(".page").forEach(function(x){
+        x.classList.remove("active");
+    });
+
+    document.getElementById(name).classList.add("active");
+
+    document.querySelectorAll(".nav").forEach(function(x){
+        x.classList.remove("active");
+    });
+
+    if(button){
+        button.classList.add("active");
+    }
+
+    document.getElementById("sidebar").classList.remove("open");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+function mobileMenu(){
+    document.getElementById("sidebar").classList.toggle("open");
+}
+
+function theme(){
+
+    document.body.classList.toggle("dark");
+
+    const dark =
+        document.body.classList.contains("dark");
+
+    if(dark){
+
+        document.documentElement.style.setProperty(
+            "--bg","#0e1525"
+        );
+
+        document.documentElement.style.setProperty(
+            "--panel","#151e31"
+        );
+
+        document.documentElement.style.setProperty(
+            "--text","#f4f7ff"
+        );
+
+        document.documentElement.style.setProperty(
+            "--muted","#8e9bb3"
+        );
+
+        document.documentElement.style.setProperty(
+            "--line","#27334a"
+        );
+
+        toast("🌙 Тёмная тема включена");
+
+    }else{
+
+        document.documentElement.style.setProperty(
+            "--bg","#f5f7fb"
+        );
+
+        document.documentElement.style.setProperty(
+            "--panel","#fff"
+        );
+
+        document.documentElement.style.setProperty(
+            "--text","#172033"
+        );
+
+        document.documentElement.style.setProperty(
+            "--muted","#8993a7"
+        );
+
+        document.documentElement.style.setProperty(
+            "--line","#e8ecf3"
+        );
+
+        toast("☀️ Светлая тема включена");
+    }
+}
+
+function toast(text){
+
+    const box=document.getElementById("toast");
+
+    box.textContent=text;
+
+    box.classList.add("show");
+
+    setTimeout(function(){
+        box.classList.remove("show");
+    },2500);
+}
+
+function complete(button){
+
+    button.textContent="✓ Выполнено";
+    button.style.background="#16b364";
+    button.disabled=true;
+
+    toast("🎉 Задание выполнено! +100 XP");
+}
+
+function search(){
+
+    const value=
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    document
+        .querySelectorAll("#coursesList .course")
+        .forEach(function(course){
+
+            const text=
+                course.textContent.toLowerCase();
+
+            course.style.display=
+                text.includes(value)
+                ? "flex"
+                : "none";
+        });
+}
+
+</script>
+
+</body>
+</html>
